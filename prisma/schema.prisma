@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users{
+  id Int @id @default(autoincrement())
+  email String @unique
+  name String?
+  password String 
+  profile Profile?
+  role Role @default(USER)
+}
+
+model Profile{
+  id Int @id @default(autoincrement())
+  avatar String?
+  level Int @default(0)
+  user Users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  game Games[]
+  user_id Int @unique
+}
+model Games{
+  id Int @id @default(autoincrement())
+  profile_id Int
+  name String 
+  cup Int @default(0)
+  profile Profile @relation(fields: [profile_id], references: [id])
+  @@unique([name,profile_id])
+}
+
+enum Role{
+  ADMIN
+  USER
+}
