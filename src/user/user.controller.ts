@@ -2,7 +2,7 @@ import {Body, Controller, Get, Put, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { UserService } from './user.service';
-import { UpdateUserDto } from 'src/auth/dto/updateuser.dto';
+import { UpdateUserDto } from '../auth/dto/updateuser.dto';
 @Controller('users')
 export class UserController {
     constructor(private userService:UserService){}
